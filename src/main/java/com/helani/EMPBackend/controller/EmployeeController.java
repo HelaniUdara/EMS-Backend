@@ -3,6 +3,7 @@ package com.helani.EMPBackend.controller;
 import com.helani.EMPBackend.dto.EmployeeDTO;
 import com.helani.EMPBackend.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,5 +33,11 @@ public class EmployeeController {
     @DeleteMapping("/deleteEmployee/{empId}")
     public Boolean deleteEmployee(@PathVariable int empId){
         return employeeService.deleteEmployee(empId);
+    }
+
+    @GetMapping("/getEmployeeById/{empId}")
+    public ResponseEntity<EmployeeDTO> getEmployeeById(@PathVariable int empId){
+        EmployeeDTO employeeDTO = employeeService.getEmployeeById(empId);
+        return ResponseEntity.ok(employeeDTO);
     }
 }

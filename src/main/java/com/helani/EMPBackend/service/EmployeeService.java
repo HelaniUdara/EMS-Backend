@@ -2,6 +2,7 @@ package com.helani.EMPBackend.service;
 
 import com.helani.EMPBackend.dto.EmployeeDTO;
 import com.helani.EMPBackend.entity.Employee;
+import com.helani.EMPBackend.exception.ResourceNotFoundException;
 import com.helani.EMPBackend.repository.EmployeeRepository;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
@@ -41,5 +42,10 @@ public class EmployeeService {
     public Boolean deleteEmployee(int empId){
         employeeRepository.deleteById(empId);
         return true;
+    }
+
+    public EmployeeDTO getEmployeeById(int empId){
+        Employee employee = employeeRepository.findById(empId).orElseThrow(() -> new ResourceNotFoundException("No such an Employee exists !"));
+        return modelMapper.map(employee, EmployeeDTO.class);
     }
 }
